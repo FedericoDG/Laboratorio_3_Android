@@ -30,22 +30,15 @@ public class InmuebleCrearFragment extends Fragment {
 
         // Observers
         viewmodel.getError().observe(getViewLifecycleOwner(), mensaje -> {
-            if (mensaje == null || mensaje.trim().isEmpty()) {
-                binding.tvErrorMessage.setVisibility(View.GONE);
-            } else {
-                binding.tvErrorMessage.setVisibility(View.VISIBLE);
-                binding.tvErrorMessage.setText(mensaje);
-            }
+            binding.tvErrorMessage.setVisibility(View.VISIBLE);
+            binding.tvErrorMessage.setTextColor(getResources().getColor(R.color.red_500));
+            binding.tvErrorMessage.setText(mensaje);
         });
 
         viewmodel.getSuccess().observe(getViewLifecycleOwner(),mensaje -> {
-            if (mensaje == null || mensaje.trim().isEmpty()) {
-                binding.tvErrorMessage.setVisibility(View.GONE);
-            } else {
-                binding.tvErrorMessage.setVisibility(View.VISIBLE);
-                binding.tvErrorMessage.setTextColor(ContextCompat.getColor(requireContext(), R.color.green_500));
-                binding.tvErrorMessage.setText(mensaje);
-            }
+            binding.tvErrorMessage.setVisibility(View.VISIBLE);
+            binding.tvErrorMessage.setTextColor(ContextCompat.getColor(requireContext(), R.color.green_500));
+            binding.tvErrorMessage.setText(mensaje);
         });
 
         // Eventos

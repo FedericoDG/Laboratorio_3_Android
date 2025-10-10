@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.federicodg80.inmobiliaria.R;
 import com.federicodg80.inmobiliaria.databinding.FragmentRecoveryBinding;
 
 public class RecuperarFragment extends Fragment {
@@ -36,15 +37,15 @@ public class RecuperarFragment extends Fragment {
             binding.tvErrorMessage.setVisibility(View.VISIBLE);
         });
 
-        viewModel.getSuccess().observe(getViewLifecycleOwner(), s -> {
-            binding.tvErrorMessage.setText(s);
-            binding.tvErrorMessage.setVisibility(View.VISIBLE);
+        viewModel.getSuccess().observe(getViewLifecycleOwner(), message -> {
+            // No implementado
         });
 
         // Eventos
         binding.btnRecuperar.setOnClickListener(view -> {
+            binding.tvErrorMessage.setText("Funcionalidad no implementada");
+            binding.tvErrorMessage.setTextColor(getResources().getColor(R.color.red_500));
             binding.tvErrorMessage.setVisibility(View.VISIBLE);
-
         });
 
         return root;

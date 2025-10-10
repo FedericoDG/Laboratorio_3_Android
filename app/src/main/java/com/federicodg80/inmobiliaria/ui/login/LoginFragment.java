@@ -35,6 +35,7 @@ public class LoginFragment extends Fragment {
 
         viewmodel.getErrorMessage().observe(getViewLifecycleOwner(), message -> {
                 binding.tvErrorMessage.setText(message);
+                binding.tvErrorMessage.setTextColor(getResources().getColor(R.color.red_500));
                 binding.tvErrorMessage.setVisibility(View.VISIBLE);
         });
 

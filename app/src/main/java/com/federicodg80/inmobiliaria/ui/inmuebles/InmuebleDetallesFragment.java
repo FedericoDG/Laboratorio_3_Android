@@ -50,6 +50,7 @@ public class InmuebleDetallesFragment extends Fragment {
 
         viewmodel.getError().observe(getViewLifecycleOwner(), mensaje -> {
             binding.tvErrorMessage.setVisibility(View.VISIBLE);
+            binding.tvErrorMessage.setTextColor(getResources().getColor(R.color.red_500));
             binding.tvErrorMessage.setText(mensaje);
         });
 

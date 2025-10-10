@@ -27,7 +27,7 @@ cd Laboratorio_3_Android
 **PASO OBLIGATORIO:** Localizá el archivo `.env` en la raíz del proyecto y editá la variable:
 
 ```env
-API_BASE_URL=https://la-ruta-a-tu-api.com/
+API_BASE_URL=https://mi-servidor.com/api/
 ```
 
 ⚠️ **Importante:**
@@ -81,3 +81,5 @@ Una vez configurada la URL, podés usar estos usuarios de prueba para hacer logi
 - Detalles de inquilinos
 - Historial de pagos recibidos
 - Estado de cada contrato
+
+---
