@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_inicio">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="com.federicodg80.inmobiliaria.ui.inicio.InicioFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_perfil"
+        android:name="com.federicodg80.inmobiliaria.ui.perfil.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/nav_inmuebles"
+        android:name="com.federicodg80.inmobiliaria.ui.inmuebles.InmueblesFragment"
+        android:label="Inmuebles"
+        tools:layout="@layout/fragment_inmuebles" >
+        <action
+            android:id="@+id/action_nav_inmuebles_to_nav_inmueble_detalles"
+            app:destination="@id/nav_inmueble_detalles" />
+        <action
+            android:id="@+id/action_nav_inmuebles_to_nav_inmueble_crear"
+            app:destination="@id/nav_inmueble_crear" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_inmueble_detalles"
+        android:name="com.federicodg80.inmobiliaria.ui.inmuebles.InmuebleDetallesFragment"
+        android:label="Detalles Inmueble"
+        tools:layout="@layout/fragment_inmueble_detalles" >
+        <action
+            android:id="@+id/action_nav_inmueble_detalles_to_nav_inmuebles"
+            app:destination="@id/nav_inmuebles" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_inmueble_crear"
+        android:name="com.federicodg80.inmobiliaria.ui.inmuebles.InmuebleCrearFragment"
+        android:label="Crear Inmueble"
+        tools:layout="@layout/fragment_inmueble_crear" >
+        <action
+            android:id="@+id/action_nav_inmueble_detalles_to_nav_inmuebles"
+            app:destination="@id/nav_inmuebles" />
+        <action
+            android:id="@+id/action_nav_inmueble_crear_to_nav_inmuebles"
+            app:destination="@id/nav_inmuebles" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_inquilinos"
+        android:name="com.federicodg80.inmobiliaria.ui.inquilinos.InquilinosFragment"
+        android:label="Inquilinos"
+        tools:layout="@layout/fragment_inquilinos" >
+        <action
+            android:id="@+id/action_nav_inquilinos_to_nav_inquilino_detalle"
+            app:destination="@id/nav_inquilino_detalles" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_inquilino_detalles"
+        android:name="com.federicodg80.inmobiliaria.ui.inquilinos.InquilinoDetallesFragment"
+        android:label="Inquilino Detalles"
+        tools:layout="@layout/fragment_inquilino_detalles" >
+        <action
+            android:id="@+id/action_nav_inquilino_detalle_to_nav_inquilinos"
+            app:destination="@id/nav_inquilinos" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_contratos"
+        android:name="com.federicodg80.inmobiliaria.ui.contratos.ContratosFragment"
+        android:label="Contratos"
+        tools:layout="@layout/fragment_contratos" >
+        <action
+            android:id="@+id/action_nav_contratos_to_nav_contrato_detalles"
+            app:destination="@id/nav_contrato_detalles" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_contrato_detalles"
+        android:name="com.federicodg80.inmobiliaria.ui.contratos.ContratoDetallesFragment"
+        android:label="Contrato Detalles"
+        tools:layout="@layout/fragment_contrato_detalles" >
+        <action
+            android:id="@+id/action_nav_contrato_detalles_to_nav_contratos"
+            app:destination="@id/nav_contratos" />
+        <action
+            android:id="@+id/action_nav_contrato_detalles_to_nav_pago_detalles"
+            app:destination="@id/nav_pago_detalles" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_pago_detalles"
+        android:name="com.federicodg80.inmobiliaria.ui.contratos.PagoDetallesFragment"
+        android:label="Pago Detalles"
+        tools:layout="@layout/fragment_pago_detalles" >
+        <action
+            android:id="@+id/action_nav_pago_detalles_to_nav_contrato_detalles"
+            app:destination="@id/nav_contrato_detalles" />
+    </fragment>
+</navigation>
