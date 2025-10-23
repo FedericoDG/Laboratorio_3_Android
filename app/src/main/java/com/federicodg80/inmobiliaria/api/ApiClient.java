@@ -15,12 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     private static Retrofit retrofit = null;
-    private static final String BASE_URL = BuildConfig.API_BASE_URL;
-    // private static final String BASE_URL = "https://ddf15a1dfc8b.ngrok-free.app";
+    private static final String BASE_URL = BuildConfig.API_BASE_URL + "/api/";
 
     public static Retrofit getClient() {
-        Log.d("ApiClient", "BASE_URL: " + BASE_URL);
-
         if (retrofit == null) {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())

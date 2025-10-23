@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.federicodg80.inmobiliaria.BuildConfig;
 import com.federicodg80.inmobiliaria.R;
 import com.federicodg80.inmobiliaria.modelos.Inmueble;
 
@@ -21,6 +22,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
     public Context context;
     public LayoutInflater inflater;
     private OnItemClickListener listener;
+    private static final String BASE_URL = BuildConfig.API_BASE_URL;
 
     public InmuebleAdapter(List<Inmueble> listaInmuebles, Context context, LayoutInflater inflater, OnItemClickListener listener) {
         this.listaInmuebles = listaInmuebles;
@@ -32,7 +34,6 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // item.xml es el archivo que sepresenta nuestra card (donde se renderiza cada hijo de la lista)
         View itemView = inflater.inflate(R.layout.item_inmueble, parent, false);
 
         return new ViewHolder(itemView);
@@ -46,7 +47,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.ViewHo
         String imagenUrl = inmueble.getImagen();
         if (imagenUrl != null && !imagenUrl.isEmpty()) {
             Glide.with(context)
-                .load(imagenUrl)
+                .load(BASE_URL + imagenUrl)
                 .placeholder(R.drawable.placeholder_inmueble)
                 .error(R.drawable.placeholder_inmueble)
                 .into(holder.ivInmueble);

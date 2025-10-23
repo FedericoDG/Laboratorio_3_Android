@@ -14,16 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.federicodg80.inmobiliaria.BuildConfig;
 import com.federicodg80.inmobiliaria.R;
 import com.federicodg80.inmobiliaria.databinding.FragmentInmuebleDetallesBinding;
 
 public class InmuebleDetallesFragment extends Fragment {
     private FragmentInmuebleDetallesBinding binding;
     private InmuebleDetallesViewModel viewmodel;
-
-    public static InmuebleDetallesFragment newInstance() {
-        return new InmuebleDetallesFragment();
-    }
+    private static final String BASE_URL = BuildConfig.API_BASE_URL;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -35,7 +33,7 @@ public class InmuebleDetallesFragment extends Fragment {
         // Observers
         viewmodel.getInmueble().observe(getViewLifecycleOwner(), inmueble -> {
             Glide.with(requireContext())
-                    .load(inmueble.getImagen())
+                    .load(BASE_URL + inmueble.getImagen())
                     .placeholder(R.drawable.placeholder_inmueble)
                     .error(R.drawable.placeholder_inmueble)
                     .into(binding.ivInmueble);

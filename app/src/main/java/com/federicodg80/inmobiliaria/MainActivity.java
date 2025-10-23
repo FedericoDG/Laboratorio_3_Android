@@ -1,11 +1,14 @@
 package com.federicodg80.inmobiliaria;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -61,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
             drawer.closeDrawers();
             return true;
         });
+
+        pedirPermisos();
     }
 
 
@@ -77,5 +82,20 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public void pedirPermisos() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                    101);
+        } else {
+            // Android 12 o inferior
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    101);
+        }
+    }
+
 
 }

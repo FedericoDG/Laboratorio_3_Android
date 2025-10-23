@@ -2,6 +2,9 @@ package com.federicodg80.inmobiliaria.ui.inmuebles;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import com.federicodg80.inmobiliaria.databinding.FragmentInmuebleCrearBinding;
 public class InmuebleCrearFragment extends Fragment {
     private FragmentInmuebleCrearBinding binding;
     private InmuebleCrearViewModel viewmodel;
+    private Uri selectedImageUri;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -50,7 +54,8 @@ public class InmuebleCrearFragment extends Fragment {
             String uso = binding.etUso.getText() != null ? binding.etUso.getText().toString() : "";
             String tipo = binding.etTipo.getText() != null ? binding.etTipo.getText().toString() : "";
 
-            viewmodel.createProperty(ambientes, direccion, precio, uso, tipo);
+            // viewmodel.createProperty(ambientes, direccion, precio, uso, tipo);
+            viewmodel.createProperty(ambientes, direccion, precio, uso, tipo, selectedImageUri);
 
             binding.etAmbientes.setText("");
             binding.etDireccion.setText("");
@@ -60,13 +65,26 @@ public class InmuebleCrearFragment extends Fragment {
         });
 
         binding.btnAbrirCamara.setOnClickListener(v -> {
-        // TODO: Implementar funcionalidad de abrir la cámara
-            Toast.makeText(getActivity(), "Jajaja. ¡Iluso!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*"); // Solo imágenes
+            startActivityForResult(intent, 101); // requestCode
         });
 
         return root;
     }
-    
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 101 && resultCode == Activity.RESULT_OK && data != null) {
+            selectedImageUri = data.getData();  // Recupero la imagen
+            binding.ivInmueble.setImageURI(selectedImageUri);
+        }
+    }
+
+
+
     @Override
     public void onDestroyView() {
         binding = null;

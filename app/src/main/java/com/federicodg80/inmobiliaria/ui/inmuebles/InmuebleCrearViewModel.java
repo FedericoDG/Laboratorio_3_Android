@@ -1,6 +1,7 @@
 package com.federicodg80.inmobiliaria.ui.inmuebles;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -13,6 +14,11 @@ import com.federicodg80.inmobiliaria.modelos.Inmueble;
 import com.federicodg80.inmobiliaria.utils.ErrorHandler;
 import com.federicodg80.inmobiliaria.utils.PreferencesManager;
 
+import java.io.InputStream;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,16 +50,38 @@ public class InmuebleCrearViewModel extends AndroidViewModel {
         return mSuccess;
     }
 
-    public void createProperty(String ambientes, String direccion, String precio, String uso, String tipo) {
+    public void createProperty(String ambientes, String direccion, String precio, String uso, String tipo, Uri imagenUri) {
         // Validación y parseo
         if (!validate(ambientes, direccion, precio, uso, tipo)) {
             return;
         }
 
         ApiService api = ApiClient.getClient().create(ApiService.class);
-        Inmueble inmueble = new Inmueble(0, direccion.trim(), parsedAmbientes, tipo.trim(), uso.trim(), parsedPrecio, null, true);
 
-        Call<Inmueble> call = api.createProperty("Bearer " + PreferencesManager.getToken(getApplication()), inmueble);
+        // Crear RequestBody para cada parte
+        RequestBody ambientesBody = RequestBody.create(MediaType.parse("text/plain"), ambientes);
+        RequestBody direccionBody = RequestBody.create(MediaType.parse("text/plain"), direccion);
+        RequestBody precioBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(parsedPrecio));
+        RequestBody usoBody = RequestBody.create(MediaType.parse("text/plain"), uso);
+        RequestBody tipoBody = RequestBody.create(MediaType.parse("text/plain"), tipo);
+
+        // si imagenUri no es null, crear MultipartBody.Part
+        MultipartBody.Part imagenPart = null;
+        if (imagenUri != null) {
+            try {
+                InputStream inputStream = getApplication().getContentResolver().openInputStream(imagenUri);
+                byte[] bytes = new byte[inputStream.available()];
+                inputStream.read(bytes);
+                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), bytes);
+                imagenPart = MultipartBody.Part.createFormData("imagen", "image.jpg", requestFile);
+                inputStream.close();
+            } catch (Exception e) {
+                mError.postValue("Error al procesar la imagen.");
+                return;
+            }
+        }
+
+        Call<Inmueble> call = api.createProperty("Bearer " + PreferencesManager.getToken(getApplication()), ambientesBody, direccionBody, precioBody, usoBody, tipoBody, imagenPart);
 
         call.enqueue(new Callback<>() {
             @Override

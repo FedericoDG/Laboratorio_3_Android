@@ -1,5 +1,7 @@
 package com.federicodg80.inmobiliaria;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,22 +16,36 @@ public class LoginActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityLoginBinding binding;
+    private LoginActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new LoginActivityViewModel(getApplication());
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
-        // destinos
+
+        // Destinos
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.loginFragment
         ).build();
+
         // NavController
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.login_nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
+        // Observables
+        viewModel.getMutableSacudida().observe(this, sacudida -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel: 2665036822"));
+                startActivity(intent);
+        });
+
+        viewModel.activarLecturasSensor();
+
     }
 
     @Override
