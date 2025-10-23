@@ -64,9 +64,16 @@ public class PerfilFragment extends Fragment {
             String apellido = binding.etApellido.getText().toString();
             String email = binding.etEmail.getText().toString();
             String telefono = binding.etTelefono.getText().toString();
+            String passwordViejo = binding.etPasswordViejo.getText().toString();
             String password = binding.etPassword.getText().toString();
+            String password2 = binding.etPassword2.getText().toString();
 
-            viewmodel.updateProfile(idPropietario, dni, nombre, apellido, email, telefono, password);
+
+            viewmodel.updateProfile(idPropietario, dni, nombre, apellido, email, telefono, passwordViejo, password, password2);
+
+            binding.etPasswordViejo.setText("");
+            binding.etPassword.setText("");
+            binding.etPassword2.setText("");
         });
 
         return root;

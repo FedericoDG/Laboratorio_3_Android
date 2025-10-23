@@ -8,20 +8,15 @@ import retrofit2.Response;
 
 public class ErrorHandler {
 
-    /**
-     * Interfaz simple para callback de errores
-     */
     public interface ErrorCallback {
         void onError(String message);
     }
 
-    /**
-     * Maneja respuestas de error del servidor
-     * Extraee el campo "message" del JSON de error
-     */
     public static void handleErrorResponse(Response<?> response, String tag, ErrorCallback callback) {
+        String errorJson = null;
         try {
-            String errorJson = null;
+            errorJson = null;
+
             if (response.errorBody() != null) {
                 errorJson = response.errorBody().string();
             }
@@ -31,18 +26,22 @@ public class ErrorHandler {
                 String message = jsonObj.optString("message", "Error desconocido");
                 callback.onError(message);
             } else {
-                callback.onError("Error desconocido");
+                Log.d("FEDE", "handleErrorResponse: " + response.body());
+
+                if (response.body() != null) {
+                    callback.onError(response.body().toString());
+                } else {
+                    callback.onError("Error desconocido");
+                }
             }
         } catch (Exception e) {
-            callback.onError("Error desconocido");
+            callback.onError(errorJson != null ? errorJson : "Error desconocido");
             Log.e(tag, "Error al procesar respuesta de error", e);
         }
         Log.e(tag, "Código HTTP: " + response.code());
     }
 
-    /**
-     * Maneja errores de red
-     */
+     // Maneja errores de red
     public static void handleErrorFailure(Throwable t, String tag, ErrorCallback callback) {
         String message = t.getMessage() != null ? t.getMessage() : "Error de conexión";
         callback.onError(message);
